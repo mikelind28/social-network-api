@@ -1,41 +1,12 @@
-import { Schema, Types, model, Document, ObjectId } from 'mongoose';
-
-interface IReaction extends Document {
-    reactionId: Schema.Types.ObjectId,
-    reactionBody: string,
-    username: string,
-    createdAt: Date,
-}
+import { Schema, model, Document } from 'mongoose';
+import Reaction from './Reaction.js';
 
 interface IThought extends Document {
   thoughtText: string,
   createdAt: Date,
   username: string,
-  reactions?: ObjectId[],
+  reactions?: typeof Reaction[],
 }
-
-const reactionSchema = new Schema<IReaction>(
-    {
-        reactionId: {
-            type: Schema.Types.ObjectId,
-            default: () => new Types.ObjectId(),
-        },
-        reactionBody: {
-            type: String,
-            required: true,
-            minlength: 1,
-            maxlength: 280,
-        },
-        username: {
-            type: String,
-            required: true,
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now,
-        },
-    }
-)
 
 const thoughtSchema = new Schema<IThought>(
   {
@@ -51,9 +22,9 @@ const thoughtSchema = new Schema<IThought>(
     },
     username: {
         type: String,
-        ref: 'user'
+        ref: 'User'
     },
-    reactions: [reactionSchema]
+    reactions: [Reaction]
   },
   {
     toJSON: {

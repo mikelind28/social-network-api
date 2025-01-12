@@ -6,7 +6,8 @@ const thought1 = new Thought({
     thoughtText: "This is thought1.",
     username: "username1",
     reactions: [{
-        reactionBody: "This is reaction1."
+        reactionBody: "This is reaction1.",
+        username: "username2"
     }]
 });
 
@@ -14,7 +15,8 @@ const thought2 = new Thought({
     thoughtText: "This is thought2.",
     username: "username2",
     reactions: [{
-        reactionBody: "This is reaction2."
+        reactionBody: "This is reaction2.",
+        username: "username3"
     }]
 });
 
@@ -22,7 +24,8 @@ const thought3 = new Thought({
     thoughtText: "This is thought3.",
     username: "username3",
     reactions: [{
-        reactionBody: "This is reaction3."
+        reactionBody: "This is reaction3.",
+        username: "username1"
     }]
 });
 

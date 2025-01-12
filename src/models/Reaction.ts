@@ -1,7 +1,7 @@
-import { Schema, Types, Document } from 'mongoose';
+import { Schema, Types, Document, ObjectId } from 'mongoose';
 
 interface IReaction extends Document {
-    reactionId: Schema.Types.ObjectId,
+    reactionId: ObjectId,
     reactionBody: string,
     username: string,
     createdAt: Date,
@@ -19,11 +19,21 @@ const reactionSchema = new Schema<IReaction>(
             minlength: 1,
             maxlength: 280,
         },
+        username: {
+            type: String,
+            required: true,
+        },
         createdAt: {
             type: Date,
             default: Date.now,
         },
+    },
+    {
+        toJSON: {
+            getters: true,
+        },
+        id: false,
     }
-)
+);
 
 export default reactionSchema;

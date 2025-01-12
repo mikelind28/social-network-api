@@ -14,7 +14,7 @@ export const getAllThoughts = async (_req: Request, res: Response) => {
 // GET single thought by its _id at /api/thoughts/:thoughtId
 export const getSingleThought = async (req: Request, res: Response) => {
     try {
-        const thought = await Thought.findOne({ _id: req.params.postId });
+        const thought = await Thought.findOne({ _id: req.params.thoughtId });
 
         if (!thought) {
         res.status(404).json({ message: 'No Thought with that ID.' });
@@ -31,7 +31,7 @@ export const createThought = async (req: Request, res: Response) => {
     try {
         const thought = await Thought.create(req.body);
         const user = await User.findOneAndUpdate(
-        { _id: req.body.userId },
+        { username: req.body.username },
         { $addToSet: { thoughts: thought._id } },
         { new: true }
         );
@@ -51,8 +51,9 @@ export const createThought = async (req: Request, res: Response) => {
 export const updateThought = async (req: Request, res: Response) => {
     try {
         const thought = await Thought.findOneAndUpdate(
-            { _id: req.body.thoughtId },
+            { _id: req.params.thoughtId },
             { $set: req.body },
+            { new: true }
         )
 
         if (!thought) {
@@ -83,9 +84,39 @@ export const deleteThought = async (req: Request, res: Response) => {
 }
 
 // POST a reaction in a thought's reactions array at /api/thouhgts/:thoughtId/reactions
-export const newReaction = async (_req: Request, res: Response) => {
+export const newReaction = async (req: Request, res: Response) => {
     try {
+        const thought = await Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $addToSet: { reactions: req.body } },
+            { new: true }
+        );
 
+        if (!thought) {
+            res.status(404).json({ message: 'No Thought with that ID.' });
+        } else {
+            res.json({ message: 'Reaction added.' });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+    }
+}
+
+// DELETE a reaction by its reactionId value at /api/thouhgts/:thoughtId/reactions/:reactionId
+export const deleteThoughtReaction = async (req: Request, res: Response) => {
+    try {
+        const thought = await Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $pull: { reactions: { reactionId: req.params.reactionId } } },
+            { new: true }
+        );
+
+        if (!thought) {
+            res.status(404).json({ message: 'No Thought with that ID.' });
+        } else {
+            res.json({ message: 'Reaction deleted.' });
+        }
     } catch (error) {
         console.log(error);
         res.status(500).json(error);

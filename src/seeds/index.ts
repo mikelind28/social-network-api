@@ -8,6 +8,9 @@ try {
     await cleanDB();
     await Thought.insertMany(thoughts);
     await User.insertMany(users);
+    await User.findOneAndUpdate({ username: "username1" }, { $addToSet: { friends: [users[1]._id, users[2]._id] }});
+    await User.findOneAndUpdate({ username: "username2" }, { $addToSet: { friends: [users[0]._id, users[2]._id] }});
+    await User.findOneAndUpdate({ username: "username3" }, { $addToSet: { friends: users[0]._id }});
     console.info('Seeding complete.');
     process.exit(0);
 } catch (error) {

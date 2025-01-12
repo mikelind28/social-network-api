@@ -1,30 +1,39 @@
 import { Router } from 'express';
 const router = Router();
 import {
-
+    getAllThoughts,
+    getSingleThought,
+    createThought,
+    updateThought,
+    deleteThought,
+    newReaction,
+    deleteThoughtReaction,
 } from '../../controllers/thoughtController.js';
 
 // /api/thoughts
 router.route('/')
     // get all thoughts
-    .get()
+    .get(getAllThoughts)
     // post a new thought; push its _id to associated user's thought array
-    .post();
+    .post(createThought);
 
 // /api/thoughts/:thoughtId
 router.route('/:thoughtId')
     // get a single thought by its _id
-    .get()
+    .get(getSingleThought)
     // update a thought by its _id
-    .put()
+    .put(updateThought)
     // delete a thought by its _id
-    .delete();
+    .delete(deleteThought);
 
 // /api/thoughts/:thoughtId/reactions
 router.route('/:thoughtId/reactions')
     // post a reaction to a single thought's reactions array
-    .post()
-    // delete a reaction by its _id
-    .delete()
+    .post(newReaction)
+
+router.route('/:thoughtId/reactions/:reactionId')
+    // delete a reaction by its reactionId value
+    .delete(deleteThoughtReaction)
+
 
 export { router as thoughtRouter };

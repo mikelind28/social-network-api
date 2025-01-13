@@ -12,6 +12,7 @@ This project was an exercise in building a server-side application from scratch,
 
 The demonstration uses Insomnia to test all of the route endpoints.
 
+![screenshot of demo in Insomnia](./images/social-network-api-insomnia.png)
 
 ## License
 

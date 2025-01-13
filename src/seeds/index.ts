@@ -3,6 +3,7 @@ import { User, Thought } from '../models/index.js';
 import cleanDB from './cleanDB.js';
 import { users, thoughts } from './seeds.js';
 
+// connect to database, clean it, and seed Thoughts and Users
 try {
     await db();
     await cleanDB();

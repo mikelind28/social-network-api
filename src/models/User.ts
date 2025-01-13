@@ -41,6 +41,7 @@ const userSchema = new Schema<IUser>({
     }
 );
 
+// virtual to share how many friends a given user has
 userSchema
     .virtual('friendCount')
     .get(function (this: IUser) {

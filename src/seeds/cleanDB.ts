@@ -1,5 +1,6 @@
 import { User, Thought } from '../models/index.js';
 
+// cleans database prior to seeding
 const cleanDB = async (): Promise<void> => {
   try {
     await User.deleteMany({});

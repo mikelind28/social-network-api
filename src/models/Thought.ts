@@ -35,6 +35,7 @@ const thoughtSchema = new Schema<IThought>(
   }
 );
 
+// virtual to share how any Reactions there are on any given Thought
 thoughtSchema
     .virtual('reactionCount')
     .get(function (this: IThought) {
@@ -49,6 +50,7 @@ thoughtSchema
         }
     })
 
+// virtual to reformat the createdAt date
 thoughtSchema
     .virtual('dateFormat')
     .get(function(this: IThought) {

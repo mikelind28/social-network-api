@@ -14,7 +14,7 @@ const thoughtSchema = new Schema<IThought>(
         type: String,
         required: true,
         minlength: 1,
-        maxlength: 280,
+        maxlength: 350,
     },
     createdAt: {
       type: Date,
@@ -22,7 +22,8 @@ const thoughtSchema = new Schema<IThought>(
     },
     username: {
         type: String,
-        ref: 'User'
+        ref: 'User',
+        required: true,
     },
     reactions: [Reaction]
   },
@@ -38,12 +39,23 @@ thoughtSchema
     .virtual('reactionCount')
     .get(function (this: IThought) {
         if (this.reactions) {
-            return `This Thought has ${this.reactions.length} Reactions.`
+            if (this.reactions.length === 1) {
+                return `This Thought has 1 Reaction.`
+            } else {
+                return `This Thought has ${this.reactions.length} Reactions.`
+            }
         } else {
-            return `This Thought doesn't have any Reactions.`
+            return "This Thought has no Reactions. ☹️"
         }
+    })
+
+thoughtSchema
+    .virtual('dateFormat')
+    .get(function(this: IThought) {
+      let formattedDate = this.createdAt.toLocaleString("en-US");
+      return formattedDate;
     });
 
-const Thought = model('thought', thoughtSchema);
+const Thought = model('Thought', thoughtSchema);
 
 export default Thought;

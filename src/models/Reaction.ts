@@ -17,7 +17,7 @@ const reactionSchema = new Schema<IReaction>(
             type: String,
             required: true,
             minlength: 1,
-            maxlength: 280,
+            maxlength: 350,
         },
         username: {
             type: String,
@@ -35,5 +35,12 @@ const reactionSchema = new Schema<IReaction>(
         id: false,
     }
 );
+
+reactionSchema
+    .virtual('dateFormat')
+    .get(function(this: IReaction) {
+      let formattedDate = this.createdAt.toLocaleString("en-US");
+      return formattedDate;
+    });
 
 export default reactionSchema;

@@ -6,7 +6,7 @@ const cleanDB = async (): Promise<void> => {
     console.log('Deleted all users.');
 
     await Thought.deleteMany({});
-    console.log('All thoughts deleted.');
+    console.log('Deleted all thoughts.');
 
   } catch (error) {
     console.error('Error cleaning collections:', error);

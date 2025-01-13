@@ -16,14 +16,14 @@ const userSchema = new Schema<IUser>({
     },
     email: {
         type: String,
-        match: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
         required: true,
         unique: true,
+        match: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
     },
     thoughts: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'thought',
+            ref: 'Thought',
         }
     ],
     friends: [
@@ -45,7 +45,11 @@ userSchema
     .virtual('friendCount')
     .get(function (this: IUser) {
         if (this.friends) {
-            return `This user has ${this.friends.length} friends.`
+            if (this.friends.length === 1) {
+                return `This user has 1 friend.`
+            } else {
+                return `This user has ${this.friends.length} friends.`
+            }
         } else {
             return "This user has no friends. ☹️"
         }
